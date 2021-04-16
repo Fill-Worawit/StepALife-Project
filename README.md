@@ -1,4 +1,4 @@
-# project_new
+# Step A Life project
 
 A new Flutter application.
 
