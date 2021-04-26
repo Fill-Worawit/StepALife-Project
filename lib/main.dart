@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_new/Profile.dart';
 import 'registration.dart';
 import 'mainpage.dart';
 import 'login.dart';
@@ -9,6 +10,7 @@ var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => Login(),
   "/mainpage": (BuildContext context) => MainPage(),
   "/register": (BuildContext context) => RegisterPage(),
+  "/profile": (BuildContext context) => ProfilePage(),
 };
 
 void main() {

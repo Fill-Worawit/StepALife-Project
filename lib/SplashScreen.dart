@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          blurRadius: 10, color: Colors.grey, spreadRadius: 5)
+                          blurRadius: 10, color: Colors.grey, spreadRadius: 5,offset: Offset(0,5))
                     ],
                   ),
                   child: CircleAvatar(

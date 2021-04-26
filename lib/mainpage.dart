@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+
 class MainPage extends StatelessWidget {
+
   int hexColor(String colorCode) {
     String colorstr = '0xff' + colorCode;
     int colorint = int.parse(colorstr);
