@@ -90,11 +90,11 @@ class ProfilePage extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontFamily: "ShareTechMono"),
               ))
             ]),
-            // RaisedButton(
-            //     child: Text("test"), onPressed: () => {print(currentUsers)}),
-            // RaisedButton(
-            //     child: Text("return to login"),
-            //     onPressed: () => {Navigator.pushNamed(context, '/login')}),
+            RaisedButton(
+                child: Text("test"), onPressed: () => {print(currentUsers)}),
+            RaisedButton(
+                child: Text("return to login"),
+                onPressed: () => {Navigator.pushNamed(context, '/login')}),
           ]))
         ]));
   }
