@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'user.dart';
+import 'mainpage.dart';
 
 class ProfilePage extends StatelessWidget {
   int hexColor(String colorCode) {
@@ -30,8 +31,20 @@ class ProfilePage extends StatelessWidget {
               ),
               child: Row(children: [
                 Icon(Icons.chevron_left_outlined),
-                Expanded(
-                  flex: 1,
+                TextButton(onPressed: (){
+                  Navigator.push(context,MaterialPageRoute(
+                    builder: (context) => HomeScreen( currentUsers: currentUsers,),
+                  ),
+                  );
+                }, child: Text("Back", style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: "ShareTechMono",
+                  color: Colors.black
+                ),)),
+                Container(
+                  width: 50,
+                ),
+                Container(
                   child: Text(
                     "Profile",
                     style: TextStyle(
@@ -55,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                   height: 20,
                   width: 20,
                   child: ClipOval(
-                    child: Image.asset('assets/image/icon.jfif'),
+                    child: Image.asset('assets/image/profile.png'),
                   ),
                 )),
             Container(height: 20),
@@ -91,9 +104,7 @@ class ProfilePage extends StatelessWidget {
               ))
             ]),
             RaisedButton(
-                child: Text("test"), onPressed: () => {print(currentUsers)}),
-            RaisedButton(
-                child: Text("return to login"),
+                child: Text("Logout"),
                 onPressed: () => {Navigator.pushNamed(context, '/login')}),
           ]))
         ]));

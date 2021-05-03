@@ -8,7 +8,7 @@ import 'SplashScreen.dart';
 
 var routes = <String, WidgetBuilder>{
   "/login": (BuildContext context) => Login(),
-  "/mainpage": (BuildContext context) => MainPage(),
+  "/mainpage": (BuildContext context) => HomeScreen(),
   "/register": (BuildContext context) => RegisterPage(),
   "/profile": (BuildContext context) => ProfilePage(),
 };

@@ -69,7 +69,7 @@ class RegisterPage extends StatelessWidget {
                   height: 20,
                   width: 20,
                   child: ClipOval(
-                    child: Image.asset('assets/image/icon.jfif'),
+                    child: Image.asset('assets/image/profile.png'),
                   ),
                 )),
             //Name
@@ -358,6 +358,37 @@ class RegisterPage extends StatelessWidget {
       'username': this.username,
       'password': this.password,
     };
+
+    print(name);
+
+    if(name == null || dob == null || weight == null || height == null || username == null || password == null) {
+      print("pass");
+      return showDialog<void>(
+          //context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Registration Fail"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text("Please fill all the field"),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          }
+      );
+    }
+
     var jsonResponse = null;
     var response = await http.post("https://stepalife-007019061-default-rtdb.firebaseio.com/data/user"+".json", body: jsonEncode(data));
     //print(response.statusCode);
@@ -365,6 +396,7 @@ class RegisterPage extends StatelessWidget {
       jsonResponse = json.decode(response.body);
       if(jsonResponse != null) {
         sharedPreferences.setString("token", jsonResponse['token']);
+        //Navigator.pushNamed(context, '/login');
       }
     }
     else {

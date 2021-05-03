@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_new/Profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'user.dart';
@@ -92,7 +91,8 @@ class _Login extends State<Login> {
                     ),
                     fillColor: Color(hexColor('FFD8D8')),
                     filled: true,
-                    contentPadding: EdgeInsets.symmetric(vertical:10, horizontal: 10),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   ),
                 ),
               ),
@@ -122,7 +122,8 @@ class _Login extends State<Login> {
                     ),
                     fillColor: Color(hexColor('FFD8D8')),
                     filled: true,
-                    contentPadding: EdgeInsets.symmetric(vertical:10, horizontal: 10),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   ),
                   obscureText: true,
                 ),
@@ -191,6 +192,35 @@ class _Login extends State<Login> {
     //   'username': this.username,
     //   'password': this.password,
     // };
+
+    if(username == null && password == null){
+      return showDialog<void>(
+          context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Login Fail"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text("Incorrect User or Password"),
+                    Text("Please Try Again"),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
+    }
+
+    print(username);
     var jsonResponse = null;
     var response = await http.get(
         "https://stepalife-007019061-default-rtdb.firebaseio.com/data/user" +
@@ -203,26 +233,56 @@ class _Login extends State<Login> {
       if (jsonResponse != null) {
         sharedPreferences.setString("token", jsonResponse['token']);
         users = parseUsers(response.body);
-        if (users[0].password == this.password) {
-          List<user> currentUser = [];
-          currentUser.add(user(
-              name: users[0].name,
-              dob: users[0].dob,
-              weight: users[0].weight,
-              height: users[0].height,
-              username: users[0].username,
-              password: users[0].password));
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProfilePage(currentUsers: currentUser),
-            ),
-          );
-        }else Navigator.pushNamed(context, "/login");
+        int count = 0;
+        for (int i = 0; i < users.length; i++) {
+          if (users[i].password == this.password) {
+            List<user> currentUser = [];
+            currentUser.add(user(
+                name: users[i].name,
+                dob: users[i].dob,
+                weight: users[i].weight,
+                height: users[i].height,
+                username: users[i].username,
+                password: users[i].password));
+            print(users[i]);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen(currentUsers: currentUser),
+              ),
+            );
+          } else {
+            count = count + 1;
+          }
+        }
+        if (count == users.length) //Navigator.pushNamed(context, "/login");
+          return showDialog<void>(
+              context: context,
+              barrierDismissible: false, // user must tap button!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Login Fail"),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text("Incorrect User or Password"),
+                        Text("Please Try Again"),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              });
+      } else {
+        throw Exception('Unable to fetch products from the REST API');
       }
-    } else {
-      throw Exception('Unable to fetch products from the REST API');
     }
   }
 }
